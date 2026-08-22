@@ -1,0 +1,30 @@
+{
+  "heart_rate": null,
+  "body_temperature": 37.04866805231366,
+  "hydration_level": 76.48147656421168,
+  "sleep_quality": 5.466370366862868,
+  "recovery_score": 77.89969131177158,
+  "stress_level": 0.3758251393720364,
+  "muscle_activity": 10.0,
+  "joint_angles": 126.48011811332992,
+  "gait_speed": 2.6543268867385734,
+  "cadence": 50.0,
+  "step_count": 4961,
+  "jump_height": 0.453082553964911,
+  "ground_reaction_force": 1859.7054554168303,
+  "range_of_motion": 113.4480717114962,
+  "ambient_temperature": 17.60324103981984,
+  "humidity": 47.31510599269539,
+  "altitude": 34.85358805128541,
+  "playing_surface": 0,
+  "training_intensity": 5.678474864297882,
+  "training_duration": 79.10656374672882,
+  "training_load": 548.4179622689803,
+  "fatigue_index": 45.02868713044895,
+  "sport_type": "Basketball",
+  "age": 18,
+  "bmi": 25.105747949474125
+}
+
+
+Actual injury_binary: 0
