@@ -20,6 +20,7 @@ class InjuryRiskRequest(BaseModel):
     ambient_temperature: float | None = Field(default=None, ge=15.0, le=38.0)
     humidity: float | None = Field(default=None, ge=30.0, le=85.0)
     altitude: float | None = Field(default=None, ge=0.0, le=1200.0)
+    # Surface type (0=Grass, 1=Turf, 2=Indoor, 3=Track, 4=Other)
     playing_surface: int | None = Field(default=None, ge=0, le=4) #stored numerically in the dataset, even though our model uses this as a categorical feature.
     training_intensity: float | None = Field(default=None, ge=2.0, le=10.0)
     training_duration: float | None = Field(default=None, ge=30.0, le=180.0)
