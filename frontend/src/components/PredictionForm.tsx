@@ -2,6 +2,7 @@
 import { predictInjuryRisk } from "../lib/api";
 import type { InjuryRiskResponse } from "../types/prediction";
 import { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { formSections, type FormField } from "../data/formFields";
 import {
   initialInjuryRiskRequest,
@@ -9,6 +10,7 @@ import {
 } from "../types/prediction";
 
 export default function PredictionForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState<InjuryRiskRequest>({
     ...initialInjuryRiskRequest,
   });
@@ -44,6 +46,8 @@ export default function PredictionForm() {
     try {
       const prediction = await predictInjuryRisk(formData);
       setResult(prediction);
+      sessionStorage.setItem("injury-risk-result", JSON.stringify(prediction));
+      router.push("/results");
     } catch (error) {
       setError(
         error instanceof Error
