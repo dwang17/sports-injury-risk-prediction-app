@@ -9,8 +9,10 @@ export interface FormField {
   name: keyof InjuryRiskRequest;
   label: string;
   type: "number" | "select";
+  isCore?: boolean;
   min?: number;
   max?: number;
+  decimalPlaces?: number;
   step?: number | "any";
   unit?: string;
   options?: FormOption[];
@@ -20,12 +22,67 @@ export interface FormSection {
   title: string;
   description: string;
   fields: FormField[];
+  collapsible?: boolean;
+  summary?: string;
 }
 
 export const formSections: FormSection[] = [
   {
-    title: "Athlete Information",
-    description: "Basic athlete characteristics and primary sport.",
+    title: "Core Inputs",
+    description:
+      "Provide at least 3 of the 5 core measurements. Additional inputs are optional and may help personalize the estimate.",
+    fields: [
+      {
+        name: "recovery_score",
+        label: "Recovery Score",
+        type: "number",
+        isCore: true,
+        min: 8.902583916887018,
+        max: 98,
+        step: "any",
+      },
+      {
+        name: "stress_level",
+        label: "Stress Level",
+        type: "number",
+        isCore: true,
+        min: 0.1,
+        max: 0.95,
+        decimalPlaces: 2,
+        step: "any",
+      },
+      {
+        name: "hydration_level",
+        label: "Hydration Level",
+        type: "number",
+        isCore: true,
+        min: 45,
+        max: 100,
+        step: "any",
+      },
+      {
+        name: "fatigue_index",
+        label: "Fatigue Index",
+        type: "number",
+        isCore: true,
+        min: 15,
+        max: 270.19321875,
+        step: "any",
+      },
+      {
+        name: "sleep_quality",
+        label: "Sleep Quality",
+        type: "number",
+        isCore: true,
+        min: 1.155807476051645,
+        max: 10,
+        step: "any",
+      },
+    ],
+  },
+  {
+    title: "Athlete & Training",
+    description: "Basic athlete characteristics and training measurements.",
     fields: [
       {
         name: "age",
@@ -42,63 +99,7 @@ export const formSections: FormSection[] = [
         type: "number",
         min: 18.5,
         max: 28.3,
-        step: 0.1,
-      },
-      {
-        name: "sport_type",
-        label: "Sport Type",
-        type: "select",
-        options: [
-          { label: "Basketball", value: "Basketball" },
-          { label: "Soccer", value: "Soccer" },
-          { label: "Track", value: "Track" },
-          { label: "Other", value: "Other" },
-        ],
-      },
-    ],
-  },
-  {
-    title: "Recovery & Wellness",
-    description: "Recent wellness, recovery, and physiological measurements.",
-    fields: [
-      {
-        name: "recovery_score",
-        label: "Recovery Score",
-        type: "number",
-        min: 8.902583916887018,
-        max: 98,
-        step: "any",
-      },
-      {
-        name: "sleep_quality",
-        label: "Sleep Quality",
-        type: "number",
-        min: 1.155807476051645,
-        max: 10,
-        step: "any",
-      },
-      {
-        name: "stress_level",
-        label: "Stress Level",
-        type: "number",
-        min: 0.1,
-        max: 0.95,
-        step: 0.01,
-      },
-      {
-        name: "hydration_level",
-        label: "Hydration Level",
-        type: "number",
-        min: 45,
-        max: 100,
-        step: "any",
-      },
-      {
-        name: "fatigue_index",
-        label: "Fatigue Index",
-        type: "number",
-        min: 15,
-        max: 270.19321875,
+        decimalPlaces: 1,
         step: "any",
       },
       {
@@ -116,14 +117,53 @@ export const formSections: FormSection[] = [
         type: "number",
         min: 35.8,
         max: 39.2,
-        step: 0.1,
+        decimalPlaces: 1,
+        step: "any",
         unit: "°C",
+      },
+      {
+        name: "sport_type",
+        label: "Sport Type",
+        type: "select",
+        options: [
+          { label: "Basketball", value: "Basketball" },
+          { label: "Soccer", value: "Soccer" },
+          { label: "Track", value: "Track" },
+          { label: "Other", value: "Other" },
+        ],
+      },
+      {
+        name: "training_intensity",
+        label: "Training Intensity",
+        type: "number",
+        min: 2,
+        max: 10,
+        step: "any",
+      },
+      {
+        name: "training_duration",
+        label: "Training Duration",
+        type: "number",
+        min: 30,
+        max: 180,
+        step: "any",
+        unit: "minutes",
+      },
+      {
+        name: "training_load",
+        label: "Training Load",
+        type: "number",
+        min: 150,
+        max: 2632.637546776286,
+        step: "any",
       },
     ],
   },
   {
     title: "Movement & Biomechanics",
     description: "Movement, force, and range-of-motion measurements.",
+    collapsible: true,
+    summary: "Advanced sensor inputs",
     fields: [
       {
         name: "muscle_activity",
@@ -198,39 +238,10 @@ export const formSections: FormSection[] = [
     ],
   },
   {
-    title: "Training",
-    description: "Measurements describing the athlete’s training session.",
-    fields: [
-      {
-        name: "training_intensity",
-        label: "Training Intensity",
-        type: "number",
-        min: 2,
-        max: 10,
-        step: "any",
-      },
-      {
-        name: "training_duration",
-        label: "Training Duration",
-        type: "number",
-        min: 30,
-        max: 180,
-        step: "any",
-        unit: "minutes",
-      },
-      {
-        name: "training_load",
-        label: "Training Load",
-        type: "number",
-        min: 150,
-        max: 2632.637546776286,
-        step: "any",
-      },
-    ],
-  },
-  {
     title: "Environment",
     description: "Conditions and surface associated with the activity.",
+    collapsible: true,
+    summary: "Additional environment data",
     fields: [
       {
         name: "ambient_temperature",
