@@ -147,28 +147,31 @@ export default function PredictionForm() {
     const errorId = `${fieldId}-error`;
     const value = formData[field.name] ?? "";
     const fieldError = fieldErrors[field.name];
-    const inputClassName = `mt-2 block w-full rounded-lg border bg-white px-3 py-2.5 text-slate-900 outline-none transition placeholder:text-slate-400 ${
+    const inputClassName = `mt-2 block w-full rounded-2xl border px-3.5 py-3 text-base text-white placeholder:text-slate-500 transition outline-none ring-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.02),0_8px_18px_rgba(2,6,23,0.28)] ${
       fieldError
-        ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-100"
-        : "border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+        ? "border-red-400/80 bg-red-500/5 focus:border-red-400"
+        : "border-white/10 bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.09),_rgba(15,23,32,0.9)_52%)] hover:border-white/20 focus:border-teal-400/70"
     }`;
 
     return (
-      <div key={field.name}>
+      <div
+        key={field.name}
+        className="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,32,0.72),rgba(11,16,24,0.92))] p-3.5 shadow-[0_12px_30px_rgba(2,6,23,0.35),inset_0_1px_0_rgba(255,255,255,0.04)]"
+      >
         <label
           htmlFor={fieldId}
-          className="flex flex-wrap items-center gap-2 text-sm font-medium text-slate-700"
+          className="flex flex-wrap items-center gap-2 text-sm font-medium text-slate-200"
         >
           <span>
             {field.label}
             {field.unit && (
-              <span className="font-normal text-slate-500">
+              <span className="font-normal text-slate-400">
                 {" "}({field.unit})
               </span>
             )}
           </span>
           {field.isCore && (
-            <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-blue-700">
+            <span className="rounded-full border border-teal-400/30 bg-teal-400/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-teal-200">
               Core
             </span>
           )}
@@ -182,9 +185,15 @@ export default function PredictionForm() {
             onChange={(event) => handleFieldChange(field, event.target.value)}
             className={inputClassName}
           >
-            <option value="">Not provided</option>
+            <option value="" className="bg-[#0d1520] text-slate-300">
+              Not provided
+            </option>
             {field.options?.map((option) => (
-              <option key={option.value} value={option.value}>
+              <option
+                key={option.value}
+                value={option.value}
+                className="bg-[#0d1520] text-white"
+              >
                 {option.label}
               </option>
             ))}
@@ -207,12 +216,12 @@ export default function PredictionForm() {
         )}
 
         {fieldError && (
-          <p id={errorId} className="mt-1.5 text-xs font-medium text-red-700">
+          <p id={errorId} className="mt-1.5 text-xs font-medium text-red-300">
             {fieldError}
           </p>
         )}
         {field.min !== undefined && field.max !== undefined && (
-          <p className="mt-1.5 text-xs text-slate-500">
+          <p className="mt-1.5 text-[11px] text-slate-400">
             Range: {formatRangeValue(field.min)}-{formatRangeValue(field.max)}
           </p>
         )}
@@ -221,8 +230,8 @@ export default function PredictionForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8">
-      <div className="space-y-8">
+    <form onSubmit={handleSubmit} className="mt-2">
+      <div className="space-y-6">
         {formSections.map((section) => {
           const sectionContent = (
             <fieldset>
@@ -230,22 +239,22 @@ export default function PredictionForm() {
                 className={
                   section.collapsible
                     ? "sr-only"
-                    : "text-lg font-semibold text-slate-900"
+                    : "text-lg font-semibold text-white"
                 }
               >
                 {section.title}
               </legend>
-              <p className="mt-1 text-sm text-slate-500">{section.description}</p>
+              <p className="mt-1 text-sm text-slate-400">{section.description}</p>
               {section.title === "Core Inputs" && (
-                <p
-                  className={`mt-4 rounded-lg border px-4 py-3 text-sm font-medium ${
+                <div
+                  className={`mt-4 rounded-2xl border px-4 py-3 text-sm font-medium ${
                     coreInputCount >= 3
-                      ? "border-emerald-200 bg-emerald-50 text-emerald-800"
-                      : "border-slate-200 bg-slate-50 text-slate-600"
+                      ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-200"
+                      : "border-white/10 bg-white/[0.02] text-slate-300"
                   }`}
                 >
                   {coreInputCount} of 5 core inputs provided
-                </p>
+                </div>
               )}
               <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {section.fields.map(renderField)}
@@ -255,11 +264,14 @@ export default function PredictionForm() {
 
           if (section.collapsible) {
             return (
-              <details key={section.title} className="group rounded-xl border border-slate-200 bg-slate-50/60 p-5">
-                <summary className="cursor-pointer list-none text-lg font-semibold text-slate-900 marker:hidden">
+              <details
+                key={section.title}
+                className="group rounded-[22px] border border-white/10 bg-white/[0.02] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"
+              >
+                <summary className="cursor-pointer list-none text-lg font-semibold text-white marker:hidden">
                   <span className="flex items-center justify-between gap-4">
                     {section.title}
-                    <span className="text-sm font-medium text-blue-700">
+                    <span className="rounded-full border border-sky-400/30 bg-sky-400/10 px-2.5 py-1 text-xs font-medium text-sky-200">
                       <span className="group-open:hidden">{section.summary}</span>
                       <span className="hidden group-open:inline">Collapse</span>
                     </span>
@@ -277,8 +289,8 @@ export default function PredictionForm() {
               tabIndex={section.title === "Core Inputs" ? -1 : undefined}
               className={
                 section.title === "Core Inputs"
-                  ? "rounded-xl border border-blue-200 bg-blue-50/40 p-5"
-                  : undefined
+                  ? "rounded-[22px] border border-sky-400/20 bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.18),_rgba(15,23,32,0.75)_55%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                  : "rounded-[22px] border border-white/10 bg-white/[0.02] p-4"
               }
             >
               {sectionContent}
@@ -290,25 +302,25 @@ export default function PredictionForm() {
       {error && (
         <div
           role="alert"
-          className="mt-8 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800"
+          className="mt-8 rounded-2xl border border-red-400/40 bg-red-500/10 p-4 text-sm text-red-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
         >
           {error}
         </div>
       )}
 
       {result && (
-        <div className="mt-8 rounded-xl border border-blue-200 bg-blue-50 p-6">
-          <p className="text-sm font-medium text-blue-700">
+        <div className="mt-8 rounded-[24px] border border-sky-400/20 bg-[linear-gradient(135deg,rgba(14,165,233,0.12),rgba(15,23,32,0.9))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+          <p className="text-sm font-medium uppercase tracking-[0.18em] text-sky-200">
             Estimated Injury Risk
           </p>
 
-          <p className="mt-1 text-4xl font-bold text-slate-900">
+          <p className="mt-3 text-5xl font-semibold tracking-tight text-white">
             {(result.injury_probability * 100).toFixed(1)}%
           </p>
 
           <p
-            className={`mt-3 font-semibold ${
-              result.elevated_risk ? "text-red-700" : "text-emerald-700"
+            className={`mt-3 text-base font-semibold ${
+              result.elevated_risk ? "text-red-300" : "text-emerald-300"
             }`}
           >
             {result.elevated_risk
@@ -316,18 +328,18 @@ export default function PredictionForm() {
               : "Lower Injury Risk"}
           </p>
 
-          <p className="mt-2 text-sm text-slate-600">
+          <p className="mt-2 text-sm text-slate-300">
             Decision threshold: {(result.threshold * 100).toFixed(0)}%
           </p>
         </div>
       )}
 
-      <div className="mt-10 flex flex-col-reverse gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:justify-end">
+      <div className="mt-10 flex flex-col-reverse gap-3 border-t border-white/10 pt-6 sm:flex-row sm:justify-end">
         <button
           type="button"
           onClick={handleClear}
           disabled={isSubmitting}
-          className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 font-medium text-slate-700 transition hover:bg-slate-50"
+          className="rounded-xl border border-white/10 bg-white/[0.02] px-5 py-2.5 font-medium text-slate-200 transition hover:border-white/20 hover:bg-white/[0.04] disabled:cursor-not-allowed disabled:opacity-60"
         >
           Clear form
         </button>
@@ -335,7 +347,7 @@ export default function PredictionForm() {
         <button
           type="submit"
           disabled={isSubmitting || coreInputCount < 3 || hasInvalidFields}
-          className="rounded-lg bg-blue-600 px-6 py-2.5 font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:cursor-not-allowed disabled:bg-blue-400"
+          className="rounded-xl bg-[linear-gradient(135deg,#67e8f9,#0ea5e9)] px-6 py-2.5 font-semibold text-slate-950 shadow-[0_14px_30px_rgba(14,165,233,0.35)] transition hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-cyan-300 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSubmitting ? "Estimating..." : "Estimate Injury Risk"}
         </button>
