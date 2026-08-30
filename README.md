@@ -1,5 +1,10 @@
 # LoadSense - Sports Injury Risk Prediction
 
+Dataset: https://www.kaggle.com/datasets/anjalibhegam/multimodal-sports-injury-dataset?select=multimodal_sports_injury_dataset.csv
+
+Kaggle Notebook: https://www.kaggle.com/code/dwang6/sports-injury-prediction-analysis
+
+
 Model was creating in scikit-learn 1.6.1, and Python 3.12 must be used for this application
 
 Creating Environment
