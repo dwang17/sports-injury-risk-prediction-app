@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.model import predict_injury_risk
@@ -11,9 +12,15 @@ app = FastAPI(
     version="1.0.0",
 )
 
+allowed_origins = ["http://localhost:3000"]
+
+frontend_url = os.getenv("FRONTEND_URL")
+if frontend_url:
+    allowed_origins.append(frontend_url.strip().rstrip("/"))
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -5,6 +5,11 @@ import numpy as np
 
 MODEL_PATH = Path(__file__).resolve().parent.parent / "injury_risk_model.joblib"
 
+if not MODEL_PATH.exists():
+    raise FileNotFoundError(
+        f"Model artifact not found at {MODEL_PATH}"
+    )
+
 artifact = joblib.load(MODEL_PATH)
 
 model = artifact["model"]

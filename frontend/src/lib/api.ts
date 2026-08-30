@@ -3,8 +3,9 @@ import type {
   InjuryRiskResponse,
 } from "../types/prediction";
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const API_URL = (
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
+).replace(/\/$/, "");
 
 function getErrorMessage(data: unknown): string {
   if (
