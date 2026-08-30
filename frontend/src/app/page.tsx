@@ -45,9 +45,7 @@ export default function Home() {
                   Complete as many fields as possible for the assessment.
                 </p>
               </div>
-              <div className="rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-xs font-medium text-slate-300">
-                Live form
-              </div>
+
             </div>
 
             <PredictionForm />
