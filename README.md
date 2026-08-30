@@ -1,4 +1,4 @@
-# sports-injury-risk-prediction-app
+# LoadSense - Sports Injury Risk Prediction
 
 Model was creating in scikit-learn 1.6.1, and Python 3.12 must be used for this application
 
